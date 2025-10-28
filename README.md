@@ -53,7 +53,61 @@ Socket programming finds applications in various domains, including web developm
 4.	Networked Games: Online multiplayer games rely on socket programming to facilitate communication between game clients and servers.
 5.	RPC mechanisms: which allow processes to execute code on a remote server, often use socket programming for communication.
 ## output:
-<img width="1374" height="869" alt="image" src="https://github.com/user-attachments/assets/fe2a748c-c565-4e83-b5a9-d13da7048427" />
+server
+```
+import socket
+
+# Create a socket object
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Bind the socket to the host and port
+server_socket.bind(('localhost', 8000))
+
+# Listen for incoming connections (max 1 connection)
+server_socket.listen(1)
+print("Server is waiting for a connection...")
+
+# Accept the connection
+conn, addr = server_socket.accept()
+print(f"Connected by {addr}")
+
+# Send a message to the client
+conn.send("Hello from the server!".encode())
+
+# Receive a message from the client
+data = conn.recv(1024)
+print(f"Received from client: {data.decode()}")
+
+# Close the connection
+conn.close()
+server_socket.close()
+
+client:
+```
+import socket
+
+# Create a socket object
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Connect to the server
+client_socket.connect(('localhost', 8000))
+
+# Print the client's socket name
+print(f"Client connected from: {client_socket.getsockname()}")
+
+# Receive a message from the server
+server_message = client_socket.recv(1024).decode()
+print(f"Received from server: {server_message}")
+
+# Send a message to the server
+client_socket.send("Acknowledgement received from the client.".encode())
+
+# Close the connection
+client_socket.close()
+```
+<img width="774" height="122" alt="image" src="https://github.com/user-attachments/assets/59bc36e1-7dc0-47ba-b7c1-33d09ae2746d" />
+<img width="613" height="99" alt="image" src="https://github.com/user-attachments/assets/57f97032-e6c8-4d74-8e12-304dc1ffea30" />
+
 
 
 ## Result:
